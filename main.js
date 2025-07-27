@@ -18,7 +18,7 @@ document.getElementById("videoForm").addEventListener("submit", async function (
       if (formData.has("file") || formData.has("link")) {
         status.textContent = "Subiendo...";
         try {
-          const response = await fetch("https://script.google.com/macros/s/AKfycbxnkCldyiUVjQGQC7DLE4aeZyO5fdfaKJlW_zzwiv4MlG1QOrC_MBuv6Avfy_oWH1__Lg/exec", {
+          const response = await fetch("https://script.google.com/macros/s/AKfycbyHa1YF89B9PdvFlYfh27EUQ7zCiTPQORF4TPvt1K2_01fBcEoZunR7sKnOZxXZbNSlSg/exec", {
             method: "POST",
             body: formData
           });
