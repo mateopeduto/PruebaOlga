@@ -25,7 +25,7 @@ document.getElementById("videoForm").addEventListener("submit", async function (
         link: link
       };
 
-      const response = await fetch("https://script.google.com/macros/s/AKfycbwi0bzcsyW8KRvgRjMDAVwZaBnMIb66TDiYcvH-rqtPnteom2d6t_Pk9jArzNQB57bxUg/exec", {
+      const response = await fetch("https://script.google.com/macros/s/AKfycbw6OHheroH0Wc8GVol3YKQuugZbVghYsQJe9kauDebSsk8RcJWE-EQQnX9yJr2PgMdkng/exec", {
         method: "POST",
         body: JSON.stringify(payload),
         headers: {
@@ -41,7 +41,7 @@ document.getElementById("videoForm").addEventListener("submit", async function (
       reader.readAsDataURL(fileInput.files[0]);
     } else {
       // Si no hay archivo, enviamos solo el link
-      const response = await fetch("https://script.google.com/macros/s/AKfycbwi0bzcsyW8KRvgRjMDAVwZaBnMIb66TDiYcvH-rqtPnteom2d6t_Pk9jArzNQB57bxUg/exec", {
+      const response = await fetch("https://script.google.com/macros/s/AKfycbw6OHheroH0Wc8GVol3YKQuugZbVghYsQJe9kauDebSsk8RcJWE-EQQnX9yJr2PgMdkng/exec", {
         method: "POST",
         body: JSON.stringify({ link }),
         headers: {
