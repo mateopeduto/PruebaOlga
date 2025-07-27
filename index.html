@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Subí tu video a OLGA</title>
+</head>
+<body>
+  <h2>Subí tu video para OLGA</h2>
+
+  <form id="videoForm">
+    <label>Subí un archivo .mp4:</label><br />
+    <input type="file" id="fileInput" accept="video/mp4" /><br /><br />
+
+    <label>O pegá un link (YouTube, Drive, etc):</label><br />
+    <input type="url" id="linkInput" placeholder="https://..." style="width: 300px;" /><br /><br />
+
+    <button type="submit">Enviar</button>
+  </form>
+
+  <p id="status"></p>
+
+  <script src="main.js"></script>
+</body>
+</html>
