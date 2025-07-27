@@ -1,35 +1,59 @@
 document.getElementById("videoForm").addEventListener("submit", async function (e) {
-      e.preventDefault();
-      const fileInput = document.getElementById("fileInput");
-      const linkInput = document.getElementById("linkInput");
-      const status = document.getElementById("status");
+  e.preventDefault();
+  const fileInput = document.getElementById("fileInput");
+  const linkInput = document.getElementById("linkInput");
+  const status = document.getElementById("status");
 
-      const formData = new FormData();
+  const link = linkInput.value.trim();
 
-      if (fileInput.files.length > 0) {
-        formData.append("file", fileInput.files[0]);
-      }
+  if (fileInput.files.length === 0 && link === "") {
+    status.textContent = "Por favor, subí un archivo o pegá un link.";
+    return;
+  }
 
-      const link = linkInput.value.trim();
-      if (link !== "") {
-        formData.append("link", link);
-      }
+  status.textContent = "Subiendo...";
 
-      if (formData.has("file") || formData.has("link")) {
-        status.textContent = "Subiendo...";
-        try {
-          const response = await fetch("https://script.google.com/macros/s/AKfycbyHa1YF89B9PdvFlYfh27EUQ7zCiTPQORF4TPvt1K2_01fBcEoZunR7sKnOZxXZbNSlSg/exec", {
-            method: "POST",
-            body: formData
-          });
+  try {
+    const reader = new FileReader();
 
-          const result = await response.text();
-          status.textContent = result || "Subida completada.";
-        } catch (error) {
-          console.error(error);
-          status.textContent = "Error al enviar el video.";
+    reader.onloadend = async function () {
+      const fileContent = reader.result.split(',')[1]; // base64 sin encabezado
+      const payload = {
+        filename: fileInput.files[0]?.name || "",
+        mimeType: fileInput.files[0]?.type || "",
+        filedata: fileContent || "",
+        link: link
+      };
+
+      const response = await fetch("https://script.google.com/macros/s/AKfycbwi0bzcsyW8KRvgRjMDAVwZaBnMIb66TDiYcvH-rqtPnteom2d6t_Pk9jArzNQB57bxUg/exec", {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: {
+          "Content-Type": "application/json"
         }
-      } else {
-        status.textContent = "Por favor, subí un archivo o pegá un link.";
-      }
-    });
+      });
+
+      const result = await response.text();
+      status.textContent = result;
+    };
+
+    if (fileInput.files.length > 0) {
+      reader.readAsDataURL(fileInput.files[0]);
+    } else {
+      // Si no hay archivo, enviamos solo el link
+      const response = await fetch("https://script.google.com/macros/s/AKfycbwi0bzcsyW8KRvgRjMDAVwZaBnMIb66TDiYcvH-rqtPnteom2d6t_Pk9jArzNQB57bxUg/exec", {
+        method: "POST",
+        body: JSON.stringify({ link }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      const result = await response.text();
+      status.textContent = result;
+    }
+  } catch (error) {
+    console.error(error);
+    status.textContent = "Error al enviar el video.";
+  }
+});
